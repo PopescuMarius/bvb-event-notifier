@@ -1,0 +1,14 @@
+scheduled:
+  task:
+    frequency:
+      every-minute: 60_000
+      every-hour: 3_600_000
+
+bvb:
+  resources:
+    starting-page: https://www.bvb.ro/FinancialInstruments/SelectedData/CurrentReports
+
+mail:
+  from: bvbeventnotifier@gmail.com
+  to: popescumariusvasile@yahoo.com
+  password: csvfirqbyneafdds
