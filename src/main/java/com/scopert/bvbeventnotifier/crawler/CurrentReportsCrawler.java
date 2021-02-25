@@ -19,7 +19,8 @@ public class CurrentReportsCrawler {
     @Autowired
     DocumentProcessor documentProcessor;
 
-    //TODO mocked for now. Where should I store it ? most basic/free database ?
+    //TODO 1. trebuie bagat postgresql sa pot lansa un MVP rapid. este gratis si pe AWS
+    //TODO 2. cred ca voi avea nevoie si de liquibase atunci ...
     private String lastProcessedReport = "Deputy Chief Executive Officer mandate termination";
 
     public void getLatestReports(String URL) throws IOException {

@@ -12,3 +12,20 @@ mail:
   from: bvbeventnotifier@gmail.com
   to: popescumariusvasile@yahoo.com
   password: csvfirqbyneafdds
+
+spring:
+  datasource:
+    url: jdbc:h2:~/bvbevents;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+    username: bvb
+    password: bvb
+    driverClassName: org.h2.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase/changelog-master.xml
+  h2:
+    console:
+      enabled: true
+
+logging:
+  level:
+    liquibase: INFO
