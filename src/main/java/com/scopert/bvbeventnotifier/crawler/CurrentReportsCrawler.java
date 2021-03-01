@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+import static com.scopert.bvbeventnotifier.utils.DateTimeUtils.getCurrentDateInBVBFormat;
+import static java.util.stream.Collectors.toCollection;
+
 @Slf4j
 @Service
 public class CurrentReportsCrawler {
@@ -20,27 +23,32 @@ public class CurrentReportsCrawler {
     DocumentProcessor documentProcessor;
 
     //TODO 1. trebuie bagat postgresql sa pot lansa un MVP rapid. este gratis si pe AWS
-    //TODO 2. cred ca voi avea nevoie si de liquibase atunci ...
-    private String lastProcessedReport = "Deputy Chief Executive Officer mandate termination";
 
-    public void getLatestReports(String URL) throws IOException {
+    private String lastProcessedReportOfTheDay = "Deputy Chief Executive Officer mandate termination";
+
+    public void getLatestReportsOfToday(String URL) throws IOException {
         Document document = Jsoup.connect(URL).get();
         Elements reportsTable = document.select("table[id=gvv]");
         Element tableContent = reportsTable.get(0).children().get(1);
 
         String latestFoundReport = tableContent.children().get(0).child(2).attr("data-search");
 
-        if (lastProcessedReport.equals(latestFoundReport)) {
+        if (lastProcessedReportOfTheDay.equals(latestFoundReport)) {
             log.info("Processed 0 reports. Index is up to date");
             return;
         }
 
-        for (Element row : tableContent.children()) {
+        Elements currentDayReports = tableContent.children()
+                                                 .stream()
+                                                 .filter(e -> e.child(3).text().startsWith(getCurrentDateInBVBFormat()))
+                                                 .collect(toCollection(Elements::new));
+
+        for (Element row : currentDayReports) {
             String symbol = row.child(0).select("strong").get(0).text();
             String description = row.child(2).attr("data-search");
             String publishDate = row.child(3).text();
 
-            if (lastProcessedReport.equals(description)) {
+            if (lastProcessedReportOfTheDay.equals(description)) {
                 break;
             }
 
@@ -57,8 +65,8 @@ public class CurrentReportsCrawler {
             }
         }
 
-        lastProcessedReport = latestFoundReport;
-        log.info("Processed {} new reports. Index has been updated with last processed report.", tableContent.children().size());
+        lastProcessedReportOfTheDay = latestFoundReport;
+        log.info("Processed {} new reports. Index has been updated with last processed report.", currentDayReports.size());
     }
 
     /* Most basic mode to eliminate english files. Maybe there are other languages or files that are not useful

@@ -21,7 +21,7 @@ public class BvbCurrentReportsTask {
 
     @Scheduled(fixedRateString  = "${scheduled.task.frequency.every-minute}")
     public void scheduleTaskWithFixedRate() throws IOException {
-        currentReportsCrawler.getLatestReports(bvbUrl);
+        currentReportsCrawler.getLatestReportsOfToday(bvbUrl);
         log.info("Parsing BVB is LIVE");
     }
 
