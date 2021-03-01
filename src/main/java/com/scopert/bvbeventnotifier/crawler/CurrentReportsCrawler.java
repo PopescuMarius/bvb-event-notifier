@@ -1,5 +1,6 @@
 package com.scopert.bvbeventnotifier.crawler;
 
+import com.scopert.bvbeventnotifier.attachments.DocumentProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,7 +32,7 @@ public class CurrentReportsCrawler {
         Elements reportsTable = document.select("table[id=gvv]");
         Element tableContent = reportsTable.get(0).children().get(1);
 
-        String latestFoundReport = tableContent.children().get(0).child(2).attr("data-search");
+        String latestFoundReport = getEventDescriptionFrom(tableContent.children().get(0));
 
         if (lastProcessedReportOfTheDay.equals(latestFoundReport)) {
             log.info("Processed 0 reports. Index is up to date");
@@ -45,7 +46,7 @@ public class CurrentReportsCrawler {
 
         for (Element row : currentDayReports) {
             String symbol = row.child(0).select("strong").get(0).text();
-            String description = row.child(2).attr("data-search");
+            String description = getEventDescriptionFrom(row);
             String publishDate = row.child(3).text();
 
             if (lastProcessedReportOfTheDay.equals(description)) {
@@ -67,6 +68,10 @@ public class CurrentReportsCrawler {
 
         lastProcessedReportOfTheDay = latestFoundReport;
         log.info("Processed {} new reports. Index has been updated with last processed report.", currentDayReports.size());
+    }
+
+    private String getEventDescriptionFrom(Element row) {
+        return row.child(2).attr("data-search");
     }
 
     /* Most basic mode to eliminate english files. Maybe there are other languages or files that are not useful

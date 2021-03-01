@@ -1,4 +1,4 @@
-package com.scopert.bvbeventnotifier.crawler;
+package com.scopert.bvbeventnotifier.attachments;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.scopert.bvbeventnotifier.crawler;
+package com.scopert.bvbeventnotifier.attachments;
 
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
