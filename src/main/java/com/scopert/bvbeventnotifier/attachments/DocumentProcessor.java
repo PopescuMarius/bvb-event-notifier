@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -42,19 +43,21 @@ public class DocumentProcessor {
         return null;
     }
 
-    private boolean lookForTrackedPhrases(String symbol, String path) {
+    private void lookForTrackedPhrases(String symbol, String path) {
         PdfReader reader = null;
         try {
             reader = new PdfReader(path);
             for (int i = 1; i <= reader.getNumberOfPages(); i++) {
                 String textFromPage = PdfTextExtractor.getTextFromPage(reader, i);
 
-                if (TrackedPhrases.containsTrackedPhrase(textFromPage)) {
+                Optional<String> matchedPhrase = TrackedPhrases.containsTrackedPhrase(textFromPage);
+                if (matchedPhrase.isPresent()) {
                     System.out.println(symbol + "    $$$$$$$$$$$$$$$    MONEY ALERT!!!   $$$$$$$$$$$");
-                    emailSender.sendEmail(symbol, TrackedPhrases.SIGNIFICANT_CONTRACT.getValue(), extractFileNameFromPath(path));
-                    return true;
+                    emailSender.sendEmail(symbol, matchedPhrase.get(), extractFileNameFromPath(path));
+                   break;
                 }
             }
+
         } catch (RuntimeException rt) {
             log.error("Runtime error while searching in PDF ", rt);
         } catch (IOException e) {
@@ -65,8 +68,6 @@ public class DocumentProcessor {
                 reader.close();
             }
         }
-
-        return false;
     }
 
     //TODO 1. aici as vrea sa lansez si eu frumos un thread care sa faca curatenie cum facea george prin demeter

@@ -32,15 +32,10 @@ public class CurrentReportsCrawler {
             return;
         }
 
-        Elements currentDayReports = bvbDocument.getCurrentDayReportsForFollowedSymbols();
+        Elements unprocessedReports = bvbDocument.getUnprocessedReports(lastProcessedReport);
 
-        for (Element row : currentDayReports) {
+        for (Element row : unprocessedReports) {
             String symbol = bvbDocument.getEventSymbolFrom(row);
-            String description = bvbDocument.getEventDescriptionFrom(row);
-
-            if (description.equals(lastProcessedReport)) {
-                break;
-            }
 
             bvbDocument.getAllAttachmentsFrom(row)
                        .stream()
@@ -51,7 +46,7 @@ public class CurrentReportsCrawler {
         }
 
         lastProcessedReport = latestFoundReportDescription;
-        log.info("Processed {} new reports. Index has been updated with last processed report.", currentDayReports.size());
+        log.info("Processed {} new reports. Index has been updated with last processed report.", unprocessedReports.size());
     }
 
     /* Most basic mode to eliminate english files. Maybe there are other languages or files that are not useful

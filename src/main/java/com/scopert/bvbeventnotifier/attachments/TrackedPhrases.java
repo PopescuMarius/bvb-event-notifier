@@ -2,6 +2,8 @@ package com.scopert.bvbeventnotifier.attachments;
 
 import lombok.Getter;
 
+import java.util.Optional;
+
 @Getter
 public enum TrackedPhrases {
     //1. contract mare
@@ -22,12 +24,12 @@ public enum TrackedPhrases {
         this.value = s;
     }
 
-    public static boolean containsTrackedPhrase(String line) {
+    public static Optional<String> containsTrackedPhrase(String line) {
         for (TrackedPhrases phrase : TrackedPhrases.values()) {
             if (line.contains(phrase.getValue())) {
-                return true;
+                return Optional.of(phrase.getValue());
             }
         }
-        return false;
+        return Optional.empty();
     }
 }

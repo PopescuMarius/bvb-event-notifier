@@ -25,17 +25,18 @@ public class DocumentWrapper {
         return getEventDescriptionFrom(tableContent.children().get(0));
     }
 
-    public Elements getCurrentDayReportsForFollowedSymbols() {
-        return getTableContent()
-                .children()
-                .stream()
-                .filter(e -> e.child(3).text().startsWith(getCurrentDateInBVBFormat()))
-                .filter(e -> !UntrackedSymbols.isUntrackedSymbol(e.child(0).select("strong").get(0).text()))
-                .collect(toCollection(Elements::new));
-    }
+    public Elements getUnprocessedReports(String lastProcessedReport) {
+        Elements elements = getCurrentDayReportsForFollowedSymbols();
+        Elements unprocessed = new Elements();
+        for (Element e : elements) {
+            String description = getEventDescriptionFrom(e);
+            if (description.equals(lastProcessedReport)) {
+                break;
+            }
+            unprocessed.add(e);
+        }
 
-    public String getEventDescriptionFrom(Element row) {
-        return row.child(2).attr("data-search");
+        return unprocessed;
     }
 
     public String getEventSymbolFrom(Element row) {
@@ -48,8 +49,21 @@ public class DocumentWrapper {
 
     public String computeUrlFromBVBPath(Element attachment) {
         String href = attachment.attr("href");
-        String url = href.startsWith("http")? href: HOSTNAME + href;
+        String url = href.startsWith("http") ? href : HOSTNAME + href;
         return url.replaceAll(" ", "%20");
+    }
+
+    private Elements getCurrentDayReportsForFollowedSymbols() {
+        return getTableContent()
+                .children()
+                .stream()
+                .filter(e -> e.child(3).text().startsWith(getCurrentDateInBVBFormat()))
+                .filter(e -> !UntrackedSymbols.isUntrackedSymbol(e.child(0).select("strong").get(0).text()))
+                .collect(toCollection(Elements::new));
+    }
+
+    private String getEventDescriptionFrom(Element row) {
+        return row.child(2).attr("data-search");
     }
 
     private Element getTableContent() {
