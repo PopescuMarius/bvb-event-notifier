@@ -18,6 +18,8 @@ public class DocumentWrapper {
         this.wrappedDocument = document;
     }
 
+    //TODO poate aici ar trebui sa iau doar ultimul element in prima faza, sa nu mai iau tot ?
+    // cat iau in table asta, tot tabelul etc ? e de studiat aici la optimizare
     public String getLatestFoundReportDescription() {
         Element tableContent = getTableContent();
         return getEventDescriptionFrom(tableContent.children().get(0));
@@ -28,7 +30,7 @@ public class DocumentWrapper {
                 .children()
                 .stream()
                 .filter(e -> e.child(3).text().startsWith(getCurrentDateInBVBFormat()))
-                .filter(e -> !UntrackedTrackedSymbols.isUntrackedTrackedSymbol(e.child(0).select("strong").get(0).text()))
+                .filter(e -> !UntrackedSymbols.isUntrackedSymbol(e.child(0).select("strong").get(0).text()))
                 .collect(toCollection(Elements::new));
     }
 

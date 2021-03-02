@@ -28,7 +28,7 @@ public class CurrentReportsCrawler {
         String latestFoundReportDescription = bvbDocument.getLatestFoundReportDescription();
 
         if (latestFoundReportDescription.equals(lastProcessedReport)) {
-            log.info("Processed 0 reports. Index is up to date");
+            log.info("No new reports to process");
             return;
         }
 

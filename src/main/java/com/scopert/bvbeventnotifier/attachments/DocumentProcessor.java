@@ -50,7 +50,7 @@ public class DocumentProcessor {
                 String textFromPage = PdfTextExtractor.getTextFromPage(reader, i);
 
                 if (TrackedPhrases.containsTrackedPhrase(textFromPage)) {
-                    System.out.println(symbol + "    MONEY ALERT!!!");
+                    System.out.println(symbol + "    $$$$$$$$$$$$$$$    MONEY ALERT!!!   $$$$$$$$$$$");
                     emailSender.sendEmail(symbol, TrackedPhrases.SIGNIFICANT_CONTRACT.getValue(), extractFileNameFromPath(path));
                     return true;
                 }
