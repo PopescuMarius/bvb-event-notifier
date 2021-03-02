@@ -49,22 +49,28 @@ public class DocumentProcessor {
             for (int i = 1; i <= reader.getNumberOfPages(); i++) {
                 String textFromPage = PdfTextExtractor.getTextFromPage(reader, i);
 
-                if (TrackedPhrases.isTrackedPhrases(textFromPage)) {
-                    System.out.println("MONEY ALERT!!!");
+                if (TrackedPhrases.containsTrackedPhrase(textFromPage)) {
+                    System.out.println(symbol + "    MONEY ALERT!!!");
                     emailSender.sendEmail(symbol, TrackedPhrases.SIGNIFICANT_CONTRACT.getValue(), extractFileNameFromPath(path));
                     return true;
                 }
             }
+        } catch (RuntimeException rt) {
+            log.error("Runtime error while searching in PDF ", rt);
         } catch (IOException e) {
-            log.error("Could not read file from path: {}", path);
+            //TODO most common issue that has to be solved : 'PDF header signature not found.'
+            log.error("Could not read file from path: {} ", path);
         } finally {
-            reader.close();
+            if (reader != null) {
+                reader.close();
+            }
         }
 
         return false;
     }
 
-    //TODO aici as vrea sa lansez si eu frumos un thread care sa faca curatenie cum facea george prin demeter
+    //TODO 1. aici as vrea sa lansez si eu frumos un thread care sa faca curatenie cum facea george prin demeter
+    //TODO 2. ar trebuie marcate alea care au ceva interesant(gen money) in ele si mutate in alt loc ... cu alt thread
     @Deprecated
     private void deleteDownloadedFile(String path) {
         try {

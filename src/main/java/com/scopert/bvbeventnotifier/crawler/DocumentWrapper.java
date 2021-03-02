@@ -1,5 +1,6 @@
 package com.scopert.bvbeventnotifier.crawler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -8,6 +9,7 @@ import static com.scopert.bvbeventnotifier.crawler.CurrentReportsCrawler.HOSTNAM
 import static com.scopert.bvbeventnotifier.utils.DateTimeUtils.getCurrentDateInBVBFormat;
 import static java.util.stream.Collectors.toCollection;
 
+@Slf4j
 public class DocumentWrapper {
 
     private Document wrappedDocument;
@@ -26,7 +28,7 @@ public class DocumentWrapper {
                 .children()
                 .stream()
                 .filter(e -> e.child(3).text().startsWith(getCurrentDateInBVBFormat()))
-                .filter(e -> TrackedSymbols.isTrackedSymbol(e.child(0).select("strong").get(0).text()))
+                .filter(e -> !UntrackedTrackedSymbols.isUntrackedTrackedSymbol(e.child(0).select("strong").get(0).text()))
                 .collect(toCollection(Elements::new));
     }
 
@@ -42,10 +44,10 @@ public class DocumentWrapper {
         return row.child(5).select("a[href]");
     }
 
-    public String computeURLfromBVBPath(Element attachment) {
-        String localeHref = attachment.attr("href");
-        String url = HOSTNAME + localeHref;
-        return url;
+    public String computeUrlFromBVBPath(Element attachment) {
+        String href = attachment.attr("href");
+        String url = href.startsWith("http")? href: HOSTNAME + href;
+        return url.replaceAll(" ", "%20");
     }
 
     private Element getTableContent() {

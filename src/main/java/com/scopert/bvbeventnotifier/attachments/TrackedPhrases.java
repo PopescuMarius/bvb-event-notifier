@@ -22,7 +22,7 @@ public enum TrackedPhrases {
         this.value = s;
     }
 
-    public static boolean isTrackedPhrases(String line) {
+    public static boolean containsTrackedPhrase(String line) {
         for (TrackedPhrases phrase : TrackedPhrases.values()) {
             if (line.contains(phrase.getValue())) {
                 return true;

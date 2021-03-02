@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -20,14 +21,13 @@ public class CurrentReportsCrawler {
     DocumentProcessor documentProcessor;
 
     //TODO 1. trebuie bagat postgresql sa pot lansa un MVP rapid. este gratis si pe AWS
-
-    private String lastProcessedReport = "Deputy Chief Executive Officer mandate termination";
+    private String lastProcessedReport;
 
     public void getLatestReportsOfToday(String URL) throws IOException {
         DocumentWrapper bvbDocument = new DocumentWrapper(Jsoup.connect(URL).get());
         String latestFoundReportDescription = bvbDocument.getLatestFoundReportDescription();
 
-        if (lastProcessedReport.equals(latestFoundReportDescription)) {
+        if (latestFoundReportDescription.equals(lastProcessedReport)) {
             log.info("Processed 0 reports. Index is up to date");
             return;
         }
@@ -38,13 +38,14 @@ public class CurrentReportsCrawler {
             String symbol = bvbDocument.getEventSymbolFrom(row);
             String description = bvbDocument.getEventDescriptionFrom(row);
 
-            if (lastProcessedReport.equals(description)) {
+            if (description.equals(lastProcessedReport)) {
                 break;
             }
 
             bvbDocument.getAllAttachmentsFrom(row)
                        .stream()
-                       .map(bvbDocument::computeURLfromBVBPath)
+                       .map(bvbDocument::computeUrlFromBVBPath)
+                       .filter(Objects::nonNull)
                        .filter(this::isRomanianFile)
                        .forEach(url -> documentProcessor.processAttachments(symbol, url));
         }
@@ -56,7 +57,11 @@ public class CurrentReportsCrawler {
     /* Most basic mode to eliminate english files. Maybe there are other languages or files that are not useful
        Also, there has to be a way to eliminate all non romanian files, I assume EN solves 80% though*/
     private boolean isRomanianFile(String url) {
-        boolean isEnglishFile = url.contains("EN");
+        boolean isEnglishFile = url.contains("EN")
+                                || url.contains("en")
+                                || url.contains("En")
+                                || url.contains("engl")
+                                || url.contains("de");
         return !isEnglishFile;
     }
 }
