@@ -47,8 +47,9 @@ public class DocumentProcessor {
         try {
             reader = new PdfReader(path);
             for (int i = 1; i <= reader.getNumberOfPages(); i++) {
-                String textFromPage = PdfTextExtractor.getTextFromPage(reader, 1);
-                if (textFromPage.contains(TrackedPhrases.SIGNIFICANT_CONTRACT.getValue())) {
+                String textFromPage = PdfTextExtractor.getTextFromPage(reader, i);
+
+                if (TrackedPhrases.isTrackedPhrases(textFromPage)) {
                     System.out.println("MONEY ALERT!!!");
                     emailSender.sendEmail(symbol, TrackedPhrases.SIGNIFICANT_CONTRACT.getValue(), extractFileNameFromPath(path));
                     return true;
@@ -64,6 +65,7 @@ public class DocumentProcessor {
     }
 
     //TODO aici as vrea sa lansez si eu frumos un thread care sa faca curatenie cum facea george prin demeter
+    @Deprecated
     private void deleteDownloadedFile(String path) {
         try {
             Files.delete(Paths.get(path));

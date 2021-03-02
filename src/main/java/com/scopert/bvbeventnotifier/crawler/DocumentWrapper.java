@@ -38,7 +38,7 @@ public class DocumentWrapper {
         return row.child(0).select("strong").get(0).text();
     }
 
-    public Elements getAttachmentsFrom(Element row) {
+    public Elements getAllAttachmentsFrom(Element row) {
         return row.child(5).select("a[href]");
     }
 

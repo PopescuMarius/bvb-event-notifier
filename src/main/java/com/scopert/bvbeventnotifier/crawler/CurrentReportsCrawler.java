@@ -42,13 +42,11 @@ public class CurrentReportsCrawler {
                 break;
             }
 
-            Elements attachments = bvbDocument.getAttachmentsFrom(row);
-            for (Element attachment : attachments) {
-                String url = bvbDocument.computeURLfromBVBPath(attachment);
-                if (isRomanianFile(url)) {
-                    documentProcessor.processAttachments(symbol, url);
-                }
-            }
+            bvbDocument.getAllAttachmentsFrom(row)
+                       .stream()
+                       .map(bvbDocument::computeURLfromBVBPath)
+                       .filter(this::isRomanianFile)
+                       .forEach(url -> documentProcessor.processAttachments(symbol, url));
         }
 
         lastProcessedReport = latestFoundReportDescription;

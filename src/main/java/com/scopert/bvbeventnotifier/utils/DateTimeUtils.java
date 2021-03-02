@@ -10,7 +10,8 @@ public class DateTimeUtils {
     public static String getCurrentDateInBVBFormat() {
         LocalDate currentDate = LocalDate.now();
         String currentDateInBvbFormat = currentDate.format(BVB_FORMAT);
-        return currentDateInBvbFormat;
+        return "3/1/2021";
+        //return currentDateInBvbFormat;
     }
 
 }
