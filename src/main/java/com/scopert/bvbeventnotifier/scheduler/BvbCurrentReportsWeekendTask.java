@@ -14,7 +14,9 @@ import java.io.IOException;
 public class BvbCurrentReportsWeekendTask extends BvbCurrentReportsTask{
 
     @Autowired
-    private CurrentReportsCrawler currentReportsCrawler;
+    public BvbCurrentReportsWeekendTask(CurrentReportsCrawler currentReportsCrawler) {
+        this.currentReportsCrawler = currentReportsCrawler;
+    }
 
     @PostConstruct
     @Override
