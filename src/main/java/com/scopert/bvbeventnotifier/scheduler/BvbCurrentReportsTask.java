@@ -1,28 +1,12 @@
 package com.scopert.bvbeventnotifier.scheduler;
 
-import com.scopert.bvbeventnotifier.crawler.CurrentReportsCrawler;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
-@Component
-@Slf4j
-public class BvbCurrentReportsTask {
+public abstract class BvbCurrentReportsTask {
 
     @Value("${bvb.resources.starting-page}")
-    private String bvbUrl;
+    protected String bvbUrl;
 
-    @Autowired
-    private CurrentReportsCrawler currentReportsCrawler;
-
-    @Scheduled(fixedRateString  = "${scheduled.task.frequency.every-minute}")
-    public void scheduleTaskWithFixedRate() throws IOException {
-        currentReportsCrawler.getLatestReportsOfToday(bvbUrl);
-        log.debug("Parsing BVB is LIVE");
-    }
+    public abstract void isUp();
 
 }

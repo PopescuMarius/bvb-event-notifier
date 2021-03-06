@@ -21,6 +21,8 @@ public class CurrentReportsCrawler {
     DocumentProcessor documentProcessor;
 
     //TODO 1. trebuie bagat postgresql sa pot lansa un MVP rapid. este gratis si pe AWS
+    //TODO Din momment ce e folosita de 3 taskuri separate trebuie vazut cum o pasez de la unu la altu, ca sutn 3 st deci instante diferite ale acc clase :) ...
+    // sa evitam concurentialitatea daca pun singleton etc ... hmmm poate bag o colectie, sa fie acolo ? sa vedem si prin ce stari a trecut
     private String lastProcessedReport;
 
     public void getLatestReportsOfToday(String URL) throws IOException {

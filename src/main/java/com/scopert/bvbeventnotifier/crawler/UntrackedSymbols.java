@@ -5,9 +5,15 @@ package com.scopert.bvbeventnotifier.crawler;
  * - Very low volumes
  * - Bonds
  * - ETFs
+ * - Certificat Turbo
  */
 public enum UntrackedSymbols {
+
     IPRU("Very low volumes"),
+    GRIU("Very low volumes"),
+    VIV25E("Bond"),
+    DRL22("Bond"),
+    BKAURTL12("Certificat Turbo"),
     TVBETETF("Nothing to speculate from an ETF");
 
     private String reasonToIgnore;

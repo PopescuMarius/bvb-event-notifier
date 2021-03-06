@@ -19,6 +19,7 @@ temp/
 *.iws
 *.iml
 *.ipr
+*.patch
 
 ### NetBeans ###
 /nbproject/private/
