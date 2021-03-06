@@ -52,7 +52,7 @@ public class DocumentProcessor {
 
                 Optional<String> matchedPhrase = TrackedPhrases.containsTrackedPhrase(textFromPage);
                 if (matchedPhrase.isPresent()) {
-                    System.out.println(symbol + "    $$$$$$$$$$$$$$$    MONEY ALERT!!!   $$$$$$$$$$$");
+                    System.out.println(symbol + "$************ Interesting event detected *************$");
                     emailSender.sendEmail(symbol, matchedPhrase.get(), extractFileNameFromPath(path));
                    break;
                 }
@@ -70,8 +70,8 @@ public class DocumentProcessor {
         }
     }
 
-    //TODO 1. aici as vrea sa lansez si eu frumos un thread care sa faca curatenie cum facea george prin demeter
-    //TODO 2. ar trebuie marcate alea care au ceva interesant(gen money) in ele si mutate in alt loc ... cu alt thread
+    //TODO 1. aici as vrea sa lansez un thread care sa faca curatenie periodic, sa stearga fisierele vechi etc
+    //TODO 2. ar trebuie marcate alea care au ceva interesant, pentru care am trimis alerta, mutate in alt loc ... cu alt thread
     @Deprecated
     private void deleteDownloadedFile(String path) {
         try {
