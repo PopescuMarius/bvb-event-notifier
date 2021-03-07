@@ -32,7 +32,7 @@ public class DocumentProcessor {
         try {
             String fileName = extractFileNameFromUrl(pdfUrl);
             URL url = new URL(pdfUrl);
-            File destinationFile = new File("temp/reports/" + fileName);
+            File destinationFile = new File("temp/raw_reports/" + fileName);
             FileUtils.copyURLToFile(url, destinationFile);
             return destinationFile.getPath();
         } catch (MalformedURLException e) {
@@ -72,6 +72,8 @@ public class DocumentProcessor {
 
     //TODO 1. aici as vrea sa lansez un thread care sa faca curatenie periodic, sa stearga fisierele vechi etc
     //TODO 2. ar trebuie marcate alea care au ceva interesant, pentru care am trimis alerta, mutate in alt loc ... cu alt thread
+    //TODO 3. ar trebui astea marcate ca interesate sa le introduc in baza iar la final de zi sa iau si pretul, sa vad daca a crescut sau nu
+    //TODO 4. de fapt ar trebui luat si pretul initial, daca e sau nu open piata, sa le pun in tabela. Poate si rulajul mediu ?
     @Deprecated
     private void deleteDownloadedFile(String path) {
         try {
