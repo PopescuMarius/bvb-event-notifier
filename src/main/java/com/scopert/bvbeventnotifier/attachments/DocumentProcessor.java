@@ -52,7 +52,7 @@ public class DocumentProcessor {
 
                 Optional<String> matchedPhrase = TrackedPhrases.containsTrackedPhrase(textFromPage);
                 if (matchedPhrase.isPresent()) {
-                    System.out.println(symbol + "$************ Interesting event detected *************$");
+                    System.out.println("$************ Interesting event detected *************$ " + symbol);
                     emailSender.sendEmail(symbol, matchedPhrase.get(), extractFileNameFromPath(path));
                    break;
                 }
@@ -62,6 +62,7 @@ public class DocumentProcessor {
             log.error("Runtime error while searching in PDF ", rt);
         } catch (IOException e) {
             //TODO most common issue that has to be solved : 'PDF header signature not found.'
+            //TODO should not try to read non *.pdf files
             log.error("Could not read file from path: {} ", path);
         } finally {
             if (reader != null) {
@@ -70,18 +71,9 @@ public class DocumentProcessor {
         }
     }
 
-    //TODO 1. aici as vrea sa lansez un thread care sa faca curatenie periodic, sa stearga fisierele vechi etc
-    //TODO 2. ar trebuie marcate alea care au ceva interesant, pentru care am trimis alerta, mutate in alt loc ... cu alt thread
+    //TODO 2. ar trebuie marcate alea care au ceva interesant, pentru care am trimis alerta, mutate in alt loc sa fie dispo mai incolo
     //TODO 3. ar trebui astea marcate ca interesate sa le introduc in baza iar la final de zi sa iau si pretul, sa vad daca a crescut sau nu
     //TODO 4. de fapt ar trebui luat si pretul initial, daca e sau nu open piata, sa le pun in tabela. Poate si rulajul mediu ?
-    @Deprecated
-    private void deleteDownloadedFile(String path) {
-        try {
-            Files.delete(Paths.get(path));
-        } catch (IOException e) {
-            log.error("Could not delete file from path {}", path);
-        }
-    }
 
     private String extractFileNameFromUrl(String pdfUrl) {
         return pdfUrl.substring(pdfUrl.lastIndexOf('/') + 1);

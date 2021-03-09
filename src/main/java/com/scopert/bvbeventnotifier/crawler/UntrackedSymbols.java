@@ -13,8 +13,13 @@ public enum UntrackedSymbols {
     GRIU("Very low volumes"),
     VIV25E("Bond"),
     DRL22("Bond"),
+    PBK28E("Bond"),
     BKAURTL12("Certificat Turbo"),
-    TVBETETF("Nothing to speculate from an ETF");
+    EBBMWTL13 ("Certificat Turbo"),
+    EBDBKTS16 ("Certificat Turbo"),
+    BKDOWTSB6 ("Certificat Turbo"),
+    TVBETETF("Nothing to speculate from an ETF"),
+    DPW("Not from BVB market");
 
     private String reasonToIgnore;
 

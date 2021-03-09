@@ -14,18 +14,25 @@ public class DocumentWrapper {
 
     private Document wrappedDocument;
 
+    public static boolean isRomanianFile(String url) {
+        boolean isOtherLanguage = url.contains("-EN-") ||
+                                  url.contains("-ENG.") ||
+                                  url.contains("-en.");
+        return !isOtherLanguage;
+    }
+
     public DocumentWrapper(Document document) {
         this.wrappedDocument = document;
     }
 
     //TODO poate aici ar trebui sa iau doar ultimul element in prima faza, sa nu mai iau tot ?
-    // cat iau in table asta, tot tabelul etc ? e de studiat aici la optimizare
+    // cat iau in table asta, tot tabelul etc ? e de studiat aici la optimizare, sa fac un fel de if any updates get elements
     public String getLatestFoundReportDescription() {
         Element tableContent = getTableContent();
         return getEventDescriptionFrom(tableContent.children().get(0));
     }
 
-    public Elements getUnprocessedReports(String lastProcessedReport) {
+    public Elements getReportsToBeProcessed(String lastProcessedReport) {
         Elements elements = getCurrentDayReportsForFollowedSymbols();
         Elements unprocessed = new Elements();
         for (Element e : elements) {
