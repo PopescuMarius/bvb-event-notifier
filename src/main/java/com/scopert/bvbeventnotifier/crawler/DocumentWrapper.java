@@ -17,6 +17,7 @@ public class DocumentWrapper {
     public static boolean isRomanianFile(String url) {
         boolean isOtherLanguage = url.contains("-EN-") ||
                                   url.contains("-ENG.") ||
+                                  url.contains("-EN.") ||
                                   url.contains("-en.");
         return !isOtherLanguage;
     }
@@ -33,17 +34,23 @@ public class DocumentWrapper {
     }
 
     public Elements getReportsToBeProcessed(String lastProcessedReport) {
-        Elements elements = getCurrentDayReportsForFollowedSymbols();
-        Elements unprocessed = new Elements();
-        for (Element e : elements) {
+        Elements currentDayReports = getCurrentDayReports();
+
+        Elements currentDayUnprocessedReports = new Elements();
+        for (Element e : currentDayReports) {
             String description = getEventDescriptionFrom(e);
             if (description.equals(lastProcessedReport)) {
                 break;
             }
-            unprocessed.add(e);
+            currentDayUnprocessedReports.add(e);
         }
 
-        return unprocessed;
+        Elements filteredByUntrackedSymbols = currentDayUnprocessedReports
+                .stream()
+                .filter(e -> !UntrackedSymbols.isUntrackedSymbol(e.child(0).select("strong").get(0).text()))
+                .collect(toCollection(Elements::new));
+
+        return filteredByUntrackedSymbols;
     }
 
     public String getEventSymbolFrom(Element row) {
@@ -60,12 +67,11 @@ public class DocumentWrapper {
         return url.replaceAll(" ", "%20");
     }
 
-    private Elements getCurrentDayReportsForFollowedSymbols() {
+    private Elements getCurrentDayReports() {
         return getTableContent()
                 .children()
                 .stream()
                 .filter(e -> e.child(3).text().startsWith(getCurrentDateInBVBFormat()))
-                .filter(e -> !UntrackedSymbols.isUntrackedSymbol(e.child(0).select("strong").get(0).text()))
                 .collect(toCollection(Elements::new));
     }
 

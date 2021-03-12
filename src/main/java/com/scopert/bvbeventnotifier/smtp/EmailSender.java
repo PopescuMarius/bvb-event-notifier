@@ -39,6 +39,7 @@ public class EmailSender {
 
     private Session session;
 
+    //TODO Maybe a cache or something else should be used to check if we have duplicated email from some reason
     public void sendEmail(String symbol, String trackedPhrase, String fileName) {
         try {
             Message msg = new MimeMessage(session);

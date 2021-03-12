@@ -27,7 +27,7 @@ public class BvbCurrentReportsClosedHoursTask extends BvbCurrentReportsTask{
     @Scheduled(cron = "0 */30 00-08,19-23 ? * MON-FRI")
     public void runDuringClosedHours() throws IOException {
         currentReportsCrawler.getLatestReportsOfToday(bvbUrl);
-        log.debug("every 30 min during closed hours");
+        log.info("every 30 min during closed hours");
     }
 
 }
