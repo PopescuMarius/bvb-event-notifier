@@ -40,15 +40,16 @@ public class EmailSender {
     private Session session;
 
     //TODO Maybe a cache or something else should be used to check if we have duplicated email from some reason
+    //TODO de ce nu as avea pe viitor si PDF ul ? o avea impact asupra timpului de trimitere ? ...
+    //TODO trebuie facute niste profile, sa nu mai comentez mereu SEND ul si apoi sa l uit asa
     public void sendEmail(String symbol, String trackedPhrase, String fileName) {
         try {
             Message msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(from));
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            //TODO de ce nu as avea pe viitor si PDF ul ? o avea impact asupra timpului de trimitere ? ...
             msg.setSubject(String.format("Eveniment important pentru: %s", symbol));
             msg.setText(String.format("Fraza cheie gasita: [%s] in documentul [%s]", trackedPhrase, fileName));
-            //Transport.send(msg);
+            Transport.send(msg);
         } catch (MessagingException e) {
             log.error("Could not send email notification", e);
         }

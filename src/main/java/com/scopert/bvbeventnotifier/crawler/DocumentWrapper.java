@@ -48,6 +48,7 @@ public class DocumentWrapper {
         Elements filteredByUntrackedSymbols = currentDayUnprocessedReports
                 .stream()
                 .filter(e -> !UntrackedSymbols.isUntrackedSymbol(e.child(0).select("strong").get(0).text()))
+                .filter(this::isErratum)
                 .collect(toCollection(Elements::new));
 
         return filteredByUntrackedSymbols;
@@ -73,6 +74,17 @@ public class DocumentWrapper {
                 .stream()
                 .filter(e -> e.child(3).text().startsWith(getCurrentDateInBVBFormat()))
                 .collect(toCollection(Elements::new));
+    }
+
+    //TODO should be deleted once we have a way to stop duplicated content emails
+    //what are the chances to have the same event in the same day for the same ISIN? none!!!
+    //CAz de test pe SAFE 10/03/2021
+    private boolean isErratum(Element e) {
+        String description = getEventDescriptionFrom(e);
+        if(description.contains("correction")){
+            return false;
+        }
+        return true;
     }
 
     private String getEventDescriptionFrom(Element row) {
