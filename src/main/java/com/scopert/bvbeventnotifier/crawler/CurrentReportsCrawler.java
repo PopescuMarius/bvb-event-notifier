@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -28,9 +27,9 @@ public class CurrentReportsCrawler {
         DocumentWrapper bvbDocument = new DocumentWrapper(Jsoup.connect(URL).get());
         String latestFoundReportDescription = bvbDocument.getLatestFoundReportDescription();
 
-        System.out.println("1. index is at :" + lastProcessedReport);
+        log.debug("1. index is at :" + lastProcessedReport);
         if (latestFoundReportDescription.equals(lastProcessedReport)) {
-            log.info("No new reports to process");
+            log.debug("No new reports to process");
             return;
         }
 
@@ -49,8 +48,8 @@ public class CurrentReportsCrawler {
         }
 
         lastProcessedReport = latestFoundReportDescription;
-        System.out.println("2. index is at :" + lastProcessedReport);
-        log.info("Processed {} new reports. Index has been updated with last processed report.", unprocessedReports.size());
+        log.debug("2. index is at :" + lastProcessedReport);
+        log.debug("Processed {} new reports. Index has been updated with last processed report.", unprocessedReports.size());
     }
 
 }

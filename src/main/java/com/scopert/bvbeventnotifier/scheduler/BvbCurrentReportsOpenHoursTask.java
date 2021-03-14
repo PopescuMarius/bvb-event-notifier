@@ -25,10 +25,10 @@ public class BvbCurrentReportsOpenHoursTask extends BvbCurrentReportsTask{
         log.info("{} is up and running!", BvbCurrentReportsOpenHoursTask.class.getSimpleName());
     }
 
-    @Scheduled(cron = "0 * 08-19 ? * MON-FRI")
+    @Scheduled(cron = "0 * * ? * MON-FRI")
     public void runDuringOpenHours() throws IOException {
         currentReportsCrawler.getLatestReportsOfToday(bvbUrl);
-        log.info("every minute during open hours and close to them");
+        log.debug("every minute during open hours and close to them");
     }
 
 }

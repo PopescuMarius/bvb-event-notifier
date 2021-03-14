@@ -11,7 +11,7 @@
 
 	<groupId>com.scopert</groupId>
 	<artifactId>bvb-event-notifier</artifactId>
-	<version>1.0.0-BETA-RELEASE</version>
+	<version>1.0.3-BETA-RELEASE</version>
 	<packaging>jar</packaging>
 	<name>bvb-event-notifier</name>
 	<description>Trying to get useful news from BVB and parse them</description>
@@ -96,6 +96,29 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>prepare</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<unzip src="${project.build.directory}/${project.build.finalName}.jar" dest="${project.build.directory}/${project.build.finalName}" />
+								<copy todir="${project.build.directory}/${project.build.finalName}/" overwrite="false">
+									<fileset dir="./" includes=".ebextensions/**"/>
+								</copy>
+								<zip compress="false" destfile="${project.build.directory}/${project.build.finalName}.jar" basedir="${project.build.directory}/${project.build.finalName}"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

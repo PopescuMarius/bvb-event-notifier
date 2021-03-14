@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+folders:
+  download: temp/raw_reports
+
+logging:
+  level:
+    com:
+      scopert:
+        bvbeventnotifier:
+          scheduler: DEBUG
+          crawler:
+            CurrentReportsCrawler: DEBUG
+

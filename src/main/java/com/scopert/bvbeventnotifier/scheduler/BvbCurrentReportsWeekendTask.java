@@ -28,7 +28,7 @@ public class BvbCurrentReportsWeekendTask extends BvbCurrentReportsTask{
     public void runDuringTheWeekend() throws IOException {
         //TODO cum fac sa interogheze url ul roman, nu cel englez ?
         currentReportsCrawler.getLatestReportsOfToday(bvbUrl);
-        log.info("once per hour during weekend");
+        log.debug("once per hour during weekend");
     }
 
 }
