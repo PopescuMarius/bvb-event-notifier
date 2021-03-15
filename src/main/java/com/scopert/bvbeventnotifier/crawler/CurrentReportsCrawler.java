@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -37,11 +38,13 @@ public class CurrentReportsCrawler {
         for (Element row : unprocessedReports) {
             String symbol = bvbDocument.getEventSymbolFrom(row);
             System.out.println("*** " + symbol);
+
             bvbDocument.getAllAttachmentsFrom(row)
                        .stream()
                        .map(bvbDocument::computeUrlFromBVBPath)
                        .filter(Objects::nonNull)
                        .filter(DocumentWrapper::isRomanianFile)
+                       .filter(DocumentWrapper::isPdfFile)
                         //TODO process on different threads ?
                        .forEach(url -> documentProcessor.processAttachments(symbol, url));
         }

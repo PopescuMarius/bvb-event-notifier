@@ -14,16 +14,20 @@ public class DocumentWrapper {
 
     private Document wrappedDocument;
 
+    public DocumentWrapper(Document document) {
+        this.wrappedDocument = document;
+    }
+
     public static boolean isRomanianFile(String url) {
         boolean isOtherLanguage = url.contains("-EN-") ||
-                                  url.contains("-ENG.") ||
-                                  url.contains("-EN.") ||
-                                  url.contains("-en.");
+                url.contains("-ENG.") ||
+                url.contains("-EN.") ||
+                url.contains("-en.");
         return !isOtherLanguage;
     }
 
-    public DocumentWrapper(Document document) {
-        this.wrappedDocument = document;
+    public static boolean isPdfFile(String url) {
+        return url.endsWith(".pdf");
     }
 
     public String getLatestFoundReportDescription() {

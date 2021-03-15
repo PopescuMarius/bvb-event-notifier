@@ -97,6 +97,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!-- TODO de facut upgrade cat sa nu mai apara warning la build. eventual pus update si pe stackoverflow -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>

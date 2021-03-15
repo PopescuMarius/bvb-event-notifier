@@ -1,6 +1,6 @@
 1. pe viitor ar trebui sa caute toate cuvintele cheie in raport. daca se face in || nu cred ca reprezinta o problema de performanta
 2. send just one email per batch. sync collection to build the message and wait/join before sending the email
-3. should not try to read non *.pdf files
+    3. should not try to read non *.pdf files
 4. ar trebuie marcate alea care au ceva interesant, pentru care am trimis alerta, mutate in alt loc sa fie dispo mai incolo
 5.  ar trebui astea marcate ca interesate sa le introduc in baza iar la final de zi sa iau si pretul, sa vad daca a crescut sau nu
 6. de fapt ar trebui luat si pretul initial, daca e sau nu open piata, sa le pun in tabela. Poate si rulajul mediu ?
@@ -17,6 +17,6 @@
 15. cum fac sa interogheze url ul roman, nu cel englez ?
 16.  Maybe a cache or something else should be used to check if we have duplicated email from some reason
 17.  de ce nu as avea pe viitor si PDF ul ? o avea impact asupra timpului de trimitere ? ...
-
-
+18. Trebuie introduse in baza toate mesajele trimis si apoi dintr-o interfata/URL bifat daca a fsot sau nu alarma falsa ...
+19. Cum fac sa nu mai modific niciodate taskurile alea ? un extra profil de rulat default doar daca nu exista un bean etc ...
 
