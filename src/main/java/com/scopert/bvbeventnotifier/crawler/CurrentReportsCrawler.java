@@ -20,7 +20,6 @@ public class CurrentReportsCrawler {
     @Autowired
     DocumentProcessor documentProcessor;
 
-    //TODO 1. am nevoie de postgresql ? este gratis si pe AWS ? poate pentru a parametra pe viitor fiecare user ce simoboluri are etc
     private String lastProcessedReport;
 
     public void getLatestReportsOfToday(String URL) throws IOException {
@@ -43,7 +42,7 @@ public class CurrentReportsCrawler {
                        .map(bvbDocument::computeUrlFromBVBPath)
                        .filter(Objects::nonNull)
                        .filter(DocumentWrapper::isRomanianFile)
-                        //TODO aici pot face un thread pentru fiecare fisier
+                        //TODO process on different threads ?
                        .forEach(url -> documentProcessor.processAttachments(symbol, url));
         }
 

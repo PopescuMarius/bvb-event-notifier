@@ -50,10 +50,8 @@ public class DocumentProcessor {
 
                 Optional<String> matchedPhrase = TrackedPhrases.containsTrackedPhrase(textFromPage);
                 if (matchedPhrase.isPresent()) {
-                    //TODO pe viitor ar trebui sa caute toate cuvintele cheie in raport. daca se face in || nu cred ca reprezinta o problema de performanta
                     System.out.println(" $************ Interesting event detected *************$ " + symbol);
                     emailSender.alertUsers(symbol, matchedPhrase.get(), extractFileNameFromPath(path));
-                    //TODO send just one email per batch. sync collection to build the message and wait/join before sending the email
                    break;
                 }
             }
@@ -62,7 +60,6 @@ public class DocumentProcessor {
             log.error("Runtime error while searching in PDF ", rt);
         } catch (IOException e) {
             //TODO most common issue that has to be solved : 'PDF header signature not found.'
-            //TODO should not try to read non *.pdf files
             log.error("Could not read file from path: {} ", path);
         } finally {
             if (reader != null) {
@@ -70,11 +67,6 @@ public class DocumentProcessor {
             }
         }
     }
-
-    //TODO 2. ar trebuie marcate alea care au ceva interesant, pentru care am trimis alerta, mutate in alt loc sa fie dispo mai incolo
-    //TODO 3. ar trebui astea marcate ca interesate sa le introduc in baza iar la final de zi sa iau si pretul, sa vad daca a crescut sau nu
-    //TODO 4. de fapt ar trebui luat si pretul initial, daca e sau nu open piata, sa le pun in tabela. Poate si rulajul mediu ?
-    //TODO 5. cred ca ar trebui luat si pretul sau graficul pe ultimele 7 zile, sa stim daca e deja prinsa sau nu stirea in el.
 
     private String extractFileNameFromUrl(String pdfUrl) {
         return pdfUrl.substring(pdfUrl.lastIndexOf('/') + 1);

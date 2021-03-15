@@ -26,7 +26,6 @@ public class BvbCurrentReportsWeekendTask extends BvbCurrentReportsTask{
 
     @Scheduled(cron = "0 01 * ? * SAT-SUN")
     public void runDuringTheWeekend() throws IOException {
-        //TODO cum fac sa interogheze url ul roman, nu cel englez ?
         currentReportsCrawler.getLatestReportsOfToday(bvbUrl);
         log.debug("once per hour during weekend");
     }

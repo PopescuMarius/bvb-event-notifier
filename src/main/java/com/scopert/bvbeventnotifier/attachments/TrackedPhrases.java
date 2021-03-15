@@ -21,12 +21,9 @@ public enum TrackedPhrases {
     ACHIZITIE_COMPANIE_1B("promisiuni bilaterale de achizitionare"),
     ACHIZITIE_COMPANIE_2A("dobândirea tuturor părților sociale"),
     ACHIZITIE_COMPANIE_2B("dobandirea tuturor partilor sociale"),
-    //TODO de studiat open-close price si data mesajului primit pentru M in data de 15.03
-    //TODO cred ca ma va interesa si rulajul mediu, sa imi dau seama cat as putea sa cumpar
     ACHIZITIE_COMPANIE_3A("aceasta achizitie"),
     ACHIZITIE_COMPANIE_3B("această achiziție");
 
-    //TODO in baza tb sa am si evenimente asemanatoare -> data si ora, pretul inchidere pe urmatoarele 3 zile etc sa imi pot face o idee daca merita sau nu luat
     private String value;
 
     TrackedPhrases(String s) {

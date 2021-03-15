@@ -15,10 +15,6 @@ import java.util.Properties;
 @Component
 public class EmailSender {
 
-    //TODO Maybe a cache or something else should be used to check if we have duplicated email from some reason
-    //TODO de ce nu as avea pe viitor si PDF ul ? o avea impact asupra timpului de trimitere ? ...
-    //TODO trebuie facute niste profile, sa nu mai comentez mereu SEND ul si apoi sa l uit asa
-
     @Value("${mail.from}")
     private String from;
 

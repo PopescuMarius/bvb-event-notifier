@@ -26,8 +26,6 @@ public class DocumentWrapper {
         this.wrappedDocument = document;
     }
 
-    //TODO poate aici ar trebui sa iau doar ultimul element in prima faza, sa nu mai iau tot ?
-    // cat iau in table asta, tot tabelul etc ? e de studiat aici la optimizare, sa fac un fel de if any updates get elements
     public String getLatestFoundReportDescription() {
         Element tableContent = getTableContent();
         return getEventDescriptionFrom(tableContent.children().get(0));
@@ -76,9 +74,6 @@ public class DocumentWrapper {
                 .collect(toCollection(Elements::new));
     }
 
-    //TODO should be deleted once we have a way to stop duplicated content emails
-    //what are the chances to have the same event in the same day for the same ISIN? none!!!
-    //CAz de test pe SAFE 10/03/2021
     private boolean isErratum(Element e) {
         String description = getEventDescriptionFrom(e);
         if(description.contains("correction")){
