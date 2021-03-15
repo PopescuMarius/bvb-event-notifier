@@ -15,6 +15,10 @@ import java.util.Properties;
 @Component
 public class EmailSender {
 
+    //TODO Maybe a cache or something else should be used to check if we have duplicated email from some reason
+    //TODO de ce nu as avea pe viitor si PDF ul ? o avea impact asupra timpului de trimitere ? ...
+    //TODO trebuie facute niste profile, sa nu mai comentez mereu SEND ul si apoi sa l uit asa
+
     @Value("${mail.from}")
     private String from;
 
@@ -24,8 +28,13 @@ public class EmailSender {
     @Value("${mail.password}")
     private String password;
 
+    @Value("${mail.enabled}")
+    private boolean enabled;
+
     @Autowired
     private Properties emailProperties;
+
+    private Session session;
 
     @PostConstruct
     public void initEmailSession() {
@@ -37,21 +46,29 @@ public class EmailSender {
         });
     }
 
-    private Session session;
-
-    //TODO Maybe a cache or something else should be used to check if we have duplicated email from some reason
-    //TODO de ce nu as avea pe viitor si PDF ul ? o avea impact asupra timpului de trimitere ? ...
-    //TODO trebuie facute niste profile, sa nu mai comentez mereu SEND ul si apoi sa l uit asa
-    public void sendEmail(String symbol, String trackedPhrase, String fileName) {
+    public void alertUsers(String symbol, String trackedPhrase, String fileName) {
         try {
-            Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(from));
-            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            msg.setSubject(String.format("Eveniment important pentru: %s", symbol));
-            msg.setText(String.format("Fraza cheie gasita: [%s] in documentul [%s]", trackedPhrase, fileName));
-            Transport.send(msg);
+            Message msg = createEmail(symbol, trackedPhrase, fileName);
+            sendEmail(msg);
         } catch (MessagingException e) {
             log.error("Could not send email notification", e);
+        }
+    }
+
+    private Message createEmail(String symbol, String trackedPhrase, String fileName) throws MessagingException {
+        Message msg = new MimeMessage(session);
+        msg.setFrom(new InternetAddress(from));
+        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        msg.setSubject(String.format("Eveniment important pentru: %s", symbol));
+        msg.setText(String.format("Fraza cheie gasita: [%s] in documentul [%s]", trackedPhrase, fileName));
+        return msg;
+    }
+
+    private void sendEmail(Message msg) throws MessagingException {
+        if(enabled){
+            Transport.send(msg);
+        } else {
+            log.info("Email sending is disabled on local environment!");
         }
     }
 

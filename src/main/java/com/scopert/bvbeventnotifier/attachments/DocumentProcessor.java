@@ -52,7 +52,7 @@ public class DocumentProcessor {
                 if (matchedPhrase.isPresent()) {
                     //TODO pe viitor ar trebui sa caute toate cuvintele cheie in raport. daca se face in || nu cred ca reprezinta o problema de performanta
                     System.out.println(" $************ Interesting event detected *************$ " + symbol);
-                    emailSender.sendEmail(symbol, matchedPhrase.get(), extractFileNameFromPath(path));
+                    emailSender.alertUsers(symbol, matchedPhrase.get(), extractFileNameFromPath(path));
                     //TODO send just one email per batch. sync collection to build the message and wait/join before sending the email
                    break;
                 }

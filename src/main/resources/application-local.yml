@@ -13,3 +13,5 @@ logging:
           crawler:
             CurrentReportsCrawler: DEBUG
 
+mail:
+  enabled: false

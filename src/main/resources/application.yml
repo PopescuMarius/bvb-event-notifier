@@ -10,6 +10,7 @@ mail:
   from: bvbeventnotifier@gmail.com
   to: popescumariusvasile@gmail.com
   password: csvfirqbyneafdds
+  enabled: true
 
 folders:
   download: /temp/raw_reports
