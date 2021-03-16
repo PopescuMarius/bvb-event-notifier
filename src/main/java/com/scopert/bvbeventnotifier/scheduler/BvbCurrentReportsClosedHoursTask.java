@@ -3,6 +3,7 @@ package com.scopert.bvbeventnotifier.scheduler;
 import com.scopert.bvbeventnotifier.crawler.CurrentReportsCrawler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 @Component
+@ConditionalOnMissingBean(LocalEnvironmentTestingTask.class)
 @Slf4j
 public class BvbCurrentReportsClosedHoursTask extends BvbCurrentReportsTask{
 

@@ -1,6 +1,5 @@
 1. pe viitor ar trebui sa caute toate cuvintele cheie in raport. daca se face in || nu cred ca reprezinta o problema de performanta
 2. send just one email per batch. sync collection to build the message and wait/join before sending the email
-    3. should not try to read non *.pdf files
 4. ar trebuie marcate alea care au ceva interesant, pentru care am trimis alerta, mutate in alt loc sa fie dispo mai incolo
 5.  ar trebui astea marcate ca interesate sa le introduc in baza iar la final de zi sa iau si pretul, sa vad daca a crescut sau nu
 6. de fapt ar trebui luat si pretul initial, daca e sau nu open piata, sa le pun in tabela. Poate si rulajul mediu ?
@@ -11,12 +10,11 @@
 11. in baza tb sa am si evenimente asemanatoare -> data si ora, pretul inchidere pe urmatoarele 3 zile etc sa imi pot face o idee daca merita sau nu luat
 12. am nevoie de postgresql ? este gratis si pe AWS ? poate pentru a parametra pe viitor fiecare user ce simoboluri are etc
 13. getLatestFoundReportDescription poate aici ar trebui sa iau doar ultimul element in prima faza, sa nu mai iau tot, cat iau in table asta, tot tabelul etc ? e de studiat aici la optimizare, sa fac un fel de if any updates get elements
-14.  isErratum(Element e) should be deleted once we have a way to stop duplicated content emails
+14. isErratum(Element e) should be deleted once we have a way to stop duplicated content emails
     what are the chances to have the same event in the same day for the same ISIN? none!!!
     CAz de test pe SAFE 10/03/2021
 15. cum fac sa interogheze url ul roman, nu cel englez ?
-16.  Maybe a cache or something else should be used to check if we have duplicated email from some reason
-17.  de ce nu as avea pe viitor si PDF ul ? o avea impact asupra timpului de trimitere ? ...
+16. Maybe a cache or something else should be used to check if we have duplicated email from some reason
+17. de ce nu as avea pe viitor si PDF ul ? o avea impact asupra timpului de trimitere ? ...
 18. Trebuie introduse in baza toate mesajele trimis si apoi dintr-o interfata/URL bifat daca a fsot sau nu alarma falsa ...
-19. Cum fac sa nu mai modific niciodate taskurile alea ? un extra profil de rulat default doar daca nu exista un bean etc ...
-
+20. Trebuie luat taurul de coarne : teste, mai intai unit testing pe metodele cu business si apoi setupul pentru cele de integrare mocking etc
