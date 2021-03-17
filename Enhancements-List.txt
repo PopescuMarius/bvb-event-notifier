@@ -1,7 +1,9 @@
+0--> de ce nu as avea pe viitor si PDF ul ? o avea impact asupra timpului de trimitere ? ...
 1. pe viitor ar trebui sa caute toate cuvintele cheie in raport. daca se face in || nu cred ca reprezinta o problema de performanta
 2. send just one email per batch. sync collection to build the message and wait/join before sending the email
 4. ar trebuie marcate alea care au ceva interesant, pentru care am trimis alerta, mutate in alt loc sa fie dispo mai incolo
 5.  ar trebui astea marcate ca interesate sa le introduc in baza iar la final de zi sa iau si pretul, sa vad daca a crescut sau nu
+    - Un task care sa ia preturile de inchidere petnru ce ma intereseaza ?
 6. de fapt ar trebui luat si pretul initial, daca e sau nu open piata, sa le pun in tabela. Poate si rulajul mediu ?
 7. cred ca ar trebui luat si pretul sau graficul pe ultimele 7 zile, sa stim daca e deja prinsa sau nu stirea in el.
 8. de studiat open-close price si data mesajului primit pentru M in data de 15.03
@@ -15,6 +17,7 @@
     CAz de test pe SAFE 10/03/2021
 15. cum fac sa interogheze url ul roman, nu cel englez ?
 16. Maybe a cache or something else should be used to check if we have duplicated email from some reason
-17. de ce nu as avea pe viitor si PDF ul ? o avea impact asupra timpului de trimitere ? ...
 18. Trebuie introduse in baza toate mesajele trimis si apoi dintr-o interfata/URL bifat daca a fsot sau nu alarma falsa ...
 20. Trebuie luat taurul de coarne : teste, mai intai unit testing pe metodele cu business si apoi setupul pentru cele de integrare mocking etc
+21. some code quality check before commit ?
+22. code coverage check? :D:D:D after I add some real unit tests of course

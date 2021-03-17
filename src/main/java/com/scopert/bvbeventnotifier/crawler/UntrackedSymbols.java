@@ -9,6 +9,13 @@ package com.scopert.bvbeventnotifier.crawler;
  */
 public enum UntrackedSymbols {
 
+    NO_SYMBOL("News with no symbols have not been useful so far."){
+        @Override
+        String getName(){
+            return "";
+        }
+    },
+
     IPRU("Very low volumes"),
     GRIU("Very low volumes"),
     VIV25E("Bond"),
@@ -34,11 +41,15 @@ public enum UntrackedSymbols {
 
     public static boolean isUntrackedSymbol(String value) {
         for (UntrackedSymbols symbol : UntrackedSymbols.values()) {
-            if (symbol.name().equals(value.trim())) {
+            if (symbol.getName().equals(value.trim())) {
                 return true;
             }
         }
         return false;
+    }
+
+    String getName(){
+        return super.name();
     }
 
 }
