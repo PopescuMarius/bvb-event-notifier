@@ -51,7 +51,7 @@ public class DocumentProcessor {
                 Optional<String> matchedPhrase = TrackedPhrases.containsTrackedPhrase(textFromPage);
                 if (matchedPhrase.isPresent()) {
                     System.out.println(" $************ Interesting event detected *************$ " + symbol);
-                    emailSender.alertUsers(symbol, matchedPhrase.get(), extractFileNameFromPath(path));
+                    emailSender.alertUsers(symbol, matchedPhrase.get(), path);
                    break;
                 }
             }

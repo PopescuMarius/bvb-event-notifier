@@ -8,7 +8,11 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 
 @Slf4j
@@ -51,12 +55,27 @@ public class EmailSender {
         }
     }
 
-    private Message createEmail(String symbol, String trackedPhrase, String fileName) throws MessagingException {
+    private Message createEmail(String symbol, String trackedPhrase, String pathToFile) throws MessagingException {
         Message msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress(from));
         msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
         msg.setSubject(String.format("Eveniment important pentru: %s", symbol));
-        msg.setText(String.format("Fraza cheie gasita: [%s] in documentul [%s]", trackedPhrase, fileName));
+
+        MimeBodyPart mimeBodyPart = new MimeBodyPart();
+        mimeBodyPart.setContent(String.format("Tipul evenimentului: [%s] in documentul atasat.", trackedPhrase), "text/html");
+
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(mimeBodyPart);
+
+        MimeBodyPart attachmentBodyPart = new MimeBodyPart();
+        try {
+            attachmentBodyPart.attachFile(new File(pathToFile));
+            multipart.addBodyPart(attachmentBodyPart);
+        } catch (IOException e) {
+            log.error("Could not attach file to email", e);
+        }
+
+        msg.setContent(multipart);
         return msg;
     }
 

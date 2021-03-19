@@ -24,6 +24,7 @@ public enum UntrackedSymbols {
     AGR25("Bond"),
     AUT24E("Bond"),
     BNET22("Bond"),
+    RBRO29("Bond"),
     BKAURTL12("Certificat Turbo"),
     EBBMWTL13 ("Certificat Turbo"),
     EBDBKTS16 ("Certificat Turbo"),
