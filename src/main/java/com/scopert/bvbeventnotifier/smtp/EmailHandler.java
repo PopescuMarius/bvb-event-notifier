@@ -63,7 +63,7 @@ public class EmailHandler {
         Message msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress(from));
         msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-        msg.setSubject(String.format("[%s][%s][%s]", symbol, event.getFirst().name(), getCurrentDateInNormalFormat()));
+        msg.setSubject(String.format("[%s] [%s] [%s]", symbol, event.getFirst().name(), getCurrentDateInNormalFormat()));
 
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
         mimeBodyPart.setContent(String.format("Fraza cheie gasita: %s", event.getSecond()), "text/html");
