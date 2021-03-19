@@ -1,24 +1,33 @@
 4. ar trebuie marcate alea care au ceva interesant, pentru care am trimis alerta, mutate in alt loc sa fie dispo mai incolo
-5.  ar trebui astea marcate ca interesate sa le introduc in baza iar la final de zi sa iau si pretul, sa vad daca a crescut sau nu
+  - le mut in alt folder momentan, notified_events, sa nu le mai sterg saptamanal
+  - cum sa-l mut ? as lansa un thread separat in BCK care sa mute, dupa trimiterea emailului
+  - in felul asta nici nu mai ingreunez procesarea fisierelor, care se face secvential acum
+5. ar trebui astea marcate ca interesate sa le introduc in baza iar la final de zi sa iau si pretul, sa vad daca a crescut sau nu
     - Un task care sa ia preturile de inchidere petnru ce ma intereseaza ?
-6. de fapt ar trebui luat si pretul initial, daca e sau nu open piata, sa le pun in tabela. Poate si rulajul mediu ?
+    - CLOSED price al zilei precedente
+    - CLOSED price al zilei curente
+    - variatia intraday (maximul), sa stiu daca as fi putu specula
+    - rulajul din ziua mesajului, comparativ cu cel saptamanal ?
 7. cred ca ar trebui luat si pretul sau graficul pe ultimele 7 zile, sa stim daca e deja prinsa sau nu stirea in el.
 8. de studiat open-close price si data mesajului primit pentru M in data de 15.03
+  - CRED ca de aici as putea deduce multe chestii legat de ce e util in mail (preturi, grafice etc)
 9. as include in email si variatia intraday din ziua respectica a elementului
+  - IDEAL sa o iau pe alt thread pentru a nu ingreuna procesarea emailului.
 10. cred ca ma va interesa si rulajul mediu, sa imi dau seama cat as putea sa cumpar
-11. in baza tb sa am si evenimente asemanatoare -> data si ora, pretul inchidere pe urmatoarele 3 zile etc sa imi pot face o idee daca merita sau nu luat
+  - LA FEL ca mai sus, cred ca pentru a construi mesajul voi inlantui mai multe astel de calluri pentru ENRICHMENT
 12. am nevoie de postgresql ? este gratis si pe AWS ? poate pentru a parametra pe viitor fiecare user ce simoboluri are etc
 13. getLatestFoundReportDescription poate aici ar trebui sa iau doar ultimul element in prima faza, sa nu mai iau tot, cat iau in table asta, tot tabelul etc ? e de studiat aici la optimizare, sa fac un fel de if any updates get elements
 14. isErratum(Element e) should be deleted once we have a way to stop duplicated content emails
     what are the chances to have the same event in the same day for the same ISIN? none!!!
     CAz de test pe SAFE 10/03/2021
 16. Maybe a cache or something else should be used to check if we have duplicated email from some reason
+11. in baza tb sa am si evenimente asemanatoare -> data si ora, pretul inchidere pe urmatoarele 3 zile etc sa imi pot face o idee daca merita sau nu luat
 15. cum fac sa interogheze url ul roman, nu cel englez ?
+24. de expus rest api cu evenimentele gasite si salvate in baza de date.
 18. Trebuie introduse in baza toate mesajele trimis si apoi dintr-o interfata/URL bifat daca a fsot sau nu alarma falsa ...
 20. Trebuie luat taurul de coarne : teste, mai intai unit testing pe metodele cu business si apoi setupul pentru cele de integrare mocking etc
+    - de exemplu pot testa ca nu mai trimit mesaj si in cazul ERATEI/modificare
+    - curios cum o sa mockuiesc pagina web luata cu jsoup ...
 21. some code quality check before commit ?
 22. code coverage check? :D:D:D after I add some real unit tests of course
 23. in email trebuie sa printez 10 randuri, alea care cuprind cuvantul cheie gasit. Fraza cheie trebuie sa fie bold sau alta culoare ca rosu
-24. de expus rest api cu evenimentele gasite si salvate in baza de date.
-
-
