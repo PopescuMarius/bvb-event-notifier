@@ -12,6 +12,3 @@ logging:
           scheduler: DEBUG
           crawler:
             CurrentReportsCrawler: DEBUG
-
-mail:
-  enabled: false

@@ -2,7 +2,7 @@ package com.scopert.bvbeventnotifier.attachments;
 
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
-import com.scopert.bvbeventnotifier.smtp.EmailSender;
+import com.scopert.bvbeventnotifier.smtp.EmailHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class DocumentProcessor {
 
     @Autowired
-    private EmailSender emailSender;
+    private EmailHandler emailSender;
 
     public void processAttachments(String symbol, String pdfUrl) {
         String path = downloadFileLocally(pdfUrl);
@@ -50,7 +50,6 @@ public class DocumentProcessor {
 
                 Optional<String> matchedPhrase = TrackedPhrases.containsTrackedPhrase(textFromPage);
                 if (matchedPhrase.isPresent()) {
-                    System.out.println(" $************ Interesting event detected *************$ " + symbol);
                     emailSender.alertUsers(symbol, matchedPhrase.get(), path);
                    break;
                 }
