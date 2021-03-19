@@ -6,6 +6,7 @@ import com.scopert.bvbeventnotifier.smtp.EmailHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -48,13 +49,12 @@ public class DocumentProcessor {
             for (int i = 1; i <= reader.getNumberOfPages(); i++) {
                 String textFromPage = PdfTextExtractor.getTextFromPage(reader, i);
 
-                Optional<String> matchedPhrase = TrackedPhrases.containsTrackedPhrase(textFromPage);
+                Optional<Pair<TrackedEvents, String>> matchedPhrase = TrackedEvents.containsTrackedPhrase(textFromPage);
                 if (matchedPhrase.isPresent()) {
                     emailSender.alertUsers(symbol, matchedPhrase.get(), path);
                    break;
                 }
             }
-
         } catch (RuntimeException rt) {
             log.error("Runtime error while searching in PDF ", rt);
         } catch (IOException e) {

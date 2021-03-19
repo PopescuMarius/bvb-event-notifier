@@ -1,8 +1,10 @@
 package com.scopert.bvbeventnotifier.smtp;
 
+import com.scopert.bvbeventnotifier.attachments.TrackedEvents;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -48,24 +50,24 @@ public class EmailHandler {
         });
     }
 
-    public void alertUsers(String symbol, String trackedPhrase, String fileName) {
+    public void alertUsers(String symbol, Pair<TrackedEvents, String> event, String fileName) {
         try {
-            Message msg = createEmail(symbol, trackedPhrase, fileName);
+            Message msg = createEmail(symbol, event, fileName);
             emailSender.sendEmail(msg);
         } catch (MessagingException e) {
             log.error("Could not send email notification", e);
         }
     }
 
-    private Message createEmail(String symbol, String trackedPhrase, String pathToFile) throws MessagingException {
+    private Message createEmail(String symbol, Pair<TrackedEvents, String> event, String pathToFile) throws MessagingException {
         Message msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress(from));
         msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-        msg.setSubject(String.format("[%s][%s][%s]", symbol, trackedPhrase, getCurrentDateInNormalFormat()));
+        msg.setSubject(String.format("[%s][%s][%s]", symbol, event.getFirst().name(), getCurrentDateInNormalFormat()));
 
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
-        mimeBodyPart.setContent(String.format("TODO add an extract from the file that contains the entry"), "text/html");
-        //TODO the above
+        mimeBodyPart.setContent(String.format("Fraza cheie gasita: %s", event.getSecond()), "text/html");
+
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(mimeBodyPart);
 
