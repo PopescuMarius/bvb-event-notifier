@@ -18,6 +18,6 @@
 20. Trebuie luat taurul de coarne : teste, mai intai unit testing pe metodele cu business si apoi setupul pentru cele de integrare mocking etc
 21. some code quality check before commit ?
 22. code coverage check? :D:D:D after I add some real unit tests of course
-23. in email trebuie sa printez 10 randuri, alea care cuprind cuvantul cheie gasit. Fraza cheie trebuie sa fie bold sau alta culoare ca rosu 
+23. in email trebuie sa printez 10 randuri, alea care cuprind cuvantul cheie gasit. Fraza cheie trebuie sa fie bold sau alta culoare ca rosu
 
 

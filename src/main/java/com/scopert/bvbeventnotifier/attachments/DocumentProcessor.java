@@ -71,8 +71,4 @@ public class DocumentProcessor {
         return pdfUrl.substring(pdfUrl.lastIndexOf('/') + 1);
     }
 
-    private String extractFileNameFromPath(String pdfUrl) {
-        return pdfUrl.substring(pdfUrl.lastIndexOf('\\') + 1);
-    }
-
 }
