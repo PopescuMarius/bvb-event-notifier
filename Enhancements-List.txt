@@ -19,5 +19,6 @@
 21. some code quality check before commit ?
 22. code coverage check? :D:D:D after I add some real unit tests of course
 23. in email trebuie sa printez 10 randuri, alea care cuprind cuvantul cheie gasit. Fraza cheie trebuie sa fie bold sau alta culoare ca rosu
+24. de expus rest api cu evenimentele gasite si salvate in baza de date.
 
 
