@@ -4,6 +4,13 @@ server:
 folders:
   download: temp/raw_reports
 
+spring:
+  datasource:
+    url: jdbc:postgresql://bvb-events.cbwzucbalmda.eu-west-3.rds.amazonaws.com:5432/postgres
+    username: postgres
+    password: ${bvb.dev.password}
+    driverClassName: org.postgresql.Driver
+
 logging:
   level:
     com:
