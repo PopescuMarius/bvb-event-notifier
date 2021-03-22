@@ -8,6 +8,7 @@
     - CLOSED price al zilei curente
     - variatia intraday (maximul), sa stiu daca as fi putu specula
     - rulajul din ziua mesajului, comparativ cu cel saptamanal ?
+6. cred ca tb facuta si o diferenta daca este convocare sau hotarari (la hotarari cred ca deja e fumata treaba)
 7. cred ca ar trebui luat si pretul sau graficul pe ultimele 7 zile, sa stim daca e deja prinsa sau nu stirea in el.
 8. de studiat open-close price si data mesajului primit pentru M in data de 15.03
   - CRED ca de aici as putea deduce multe chestii legat de ce e util in mail (preturi, grafice etc)

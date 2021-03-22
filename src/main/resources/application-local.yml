@@ -1,6 +1,6 @@
 server:
   port: 8080
-
+#swagger added on: http://localhost:8080/swagger-ui/#/
 folders:
   download: temp/raw_reports
 

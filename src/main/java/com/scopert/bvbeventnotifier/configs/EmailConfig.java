@@ -1,4 +1,4 @@
-package com.scopert.bvbeventnotifier.smtp;
+package com.scopert.bvbeventnotifier.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
