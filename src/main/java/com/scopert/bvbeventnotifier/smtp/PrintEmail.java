@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
@@ -30,8 +31,8 @@ public class PrintEmail implements EmailSender {
                     .map(address -> (InternetAddress)address)
                     .forEach(address -> System.out.println("TO         : " + address.getAddress()));
             System.out.println("SUBJECT    : " + msg.getSubject());
-            System.out.println("BODY       : " + ((MimeMultipart) msg.getContent()).getBodyPart(0).getContent());
             System.out.println("ATTACHMENT : " + ((MimeMultipart) msg.getContent()).getBodyPart(1).getFileName());
+            System.out.println("BODY       : " + ((MimeMultipart) msg.getContent()).getBodyPart(0).getContent());
         } catch (IOException e) {
             log.error("Issue while accessing multipart content from email");
         }

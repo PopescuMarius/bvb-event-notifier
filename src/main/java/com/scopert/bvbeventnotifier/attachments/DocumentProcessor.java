@@ -19,6 +19,8 @@ import java.util.Optional;
 @Slf4j
 public class DocumentProcessor {
 
+    public static final int PHRASE_OFFSET = 500;
+
     @Autowired
     private EmailHandler emailSender;
 
@@ -47,12 +49,13 @@ public class DocumentProcessor {
         try {
             reader = new PdfReader(path);
             for (int i = 1; i <= reader.getNumberOfPages(); i++) {
-                String textFromPage = PdfTextExtractor.getTextFromPage(reader, i);
+                String pageText = PdfTextExtractor.getTextFromPage(reader, i);
 
-                Optional<Pair<TrackedEvents, String>> matchedPhrase = TrackedEvents.containsTrackedPhrase(textFromPage);
+                Optional<Pair<TrackedEvents, String>> matchedPhrase = TrackedEvents.containsTrackedPhrase(pageText);
                 if (matchedPhrase.isPresent()) {
-                    emailSender.alertUsers(symbol, matchedPhrase.get(), path);
-                   break;
+                    String context = getPhraseContext(pageText, matchedPhrase.get().getSecond());
+                    emailSender.alertUsers(symbol, matchedPhrase.get(), context, path);
+                    break;
                 }
             }
         } catch (RuntimeException rt) {
@@ -65,6 +68,14 @@ public class DocumentProcessor {
                 reader.close();
             }
         }
+    }
+
+    private String getPhraseContext(String pageText, String phrase) {
+        int phraseIndex = pageText.indexOf(phrase);
+        int contextStartIndex = phraseIndex - PHRASE_OFFSET < 0 ? 0: phraseIndex - PHRASE_OFFSET;
+        int contextEndIndex = phraseIndex + PHRASE_OFFSET > pageText.length() ? pageText.length() : phraseIndex + PHRASE_OFFSET;
+        String context = pageText.substring(contextStartIndex, contextEndIndex);
+        return context;
     }
 
     private String extractFileNameFromUrl(String pdfUrl) {

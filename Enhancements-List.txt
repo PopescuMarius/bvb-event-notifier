@@ -30,4 +30,10 @@
     - curios cum o sa mockuiesc pagina web luata cu jsoup ...
 21. some code quality check before commit ?
 22. code coverage check? :D:D:D after I add some real unit tests of course
-23. in email trebuie sa printez 10 randuri, alea care cuprind cuvantul cheie gasit. Fraza cheie trebuie sa fie bold sau alta culoare ca rosu
+24: Tabela de useri
+25: Tabela de simboluri
+26: Mapari intre useri si simboluri la care sunt abonati
+27: Rest API pentru adaugare user
+28: Rest api pentru abonare sa simboluri
+29: Rest api pentru a lua ultimele rapoarte
+30: donatie paypal de pus in mail ?

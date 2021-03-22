@@ -13,6 +13,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
@@ -50,23 +51,25 @@ public class EmailHandler {
         });
     }
 
-    public void alertUsers(String symbol, Pair<TrackedEvents, String> event, String fileName) {
+    public void alertUsers(String symbol, Pair<TrackedEvents, String> event, String text, String fileName) {
         try {
-            Message msg = createEmail(symbol, event, fileName);
+            Message msg = createEmail(symbol, event, text, fileName);
             emailSender.sendEmail(msg);
         } catch (MessagingException e) {
             log.error("Could not send email notification", e);
         }
     }
 
-    private Message createEmail(String symbol, Pair<TrackedEvents, String> event, String pathToFile) throws MessagingException {
+    private Message createEmail(String symbol, Pair<TrackedEvents, String> event, String text, String pathToFile) throws MessagingException {
         Message msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress(from));
         msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
         msg.setSubject(String.format("[%s] [%s] [%s]", symbol, event.getFirst().name(), getCurrentDateInNormalFormat()));
 
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
-        mimeBodyPart.setContent(String.format("Fraza cheie gasita: %s", event.getSecond()), "text/html");
+        String textWithHighlight = text.replaceAll(event.getSecond(), addColor(event.getSecond(), Color.RED));
+        String textWithBreaks = textWithHighlight.replaceAll("\\n", "<br>");
+        mimeBodyPart.setContent("<br>" + textWithBreaks, "text/html");
 
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(mimeBodyPart);
@@ -81,6 +84,12 @@ public class EmailHandler {
 
         msg.setContent(multipart);
         return msg;
+    }
+
+    public static String addColor(String msg, Color color) {
+        String hexColor = String.format("#%06X",  (0xFFFFFF & color.getRGB()));
+        String colorMsg = "<FONT COLOR=\"#" + hexColor + "\">" + msg + "</FONT>";
+        return colorMsg;
     }
 
 }
