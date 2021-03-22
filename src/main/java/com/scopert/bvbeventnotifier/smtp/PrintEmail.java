@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
