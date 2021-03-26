@@ -1,4 +1,3 @@
-0 . In primul rand trebuie facuta tabela de stocare a indexului.
 4. ar trebuie marcate alea care au ceva interesant, pentru care am trimis alerta, mutate in alt loc sa fie dispo mai incolo
   - le mut in alt folder momentan, notified_events, sa nu le mai sterg saptamanal
   - cum sa-l mut ? as lansa un thread separat in BCK care sa mute, dupa trimiterea emailului
@@ -38,3 +37,8 @@
 28: Rest api pentru abonare sa simboluri
 29: Rest api pentru a lua ultimele rapoarte
 30: donatie paypal de pus in mail ?
+
+IDEI de dezvoltare in urma raportului de audit al NRF :
+ - sa devina agregator de stiri per emitent ? adica sa trimita absolut toate stirile ?
+ - sa aiba si sectiune separata de specula (miscari de piata)?
+ - sa pun si grade de importanta pe emailuri ? sau sensul ,daca preconizez scadere, crestere sau e doar o confirmare (gen convocare vs avut loc)

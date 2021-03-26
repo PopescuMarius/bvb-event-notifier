@@ -1,6 +1,9 @@
 package com.scopert.bvbeventnotifier.crawler;
 
 import com.scopert.bvbeventnotifier.attachments.DocumentProcessor;
+import com.scopert.bvbeventnotifier.storage.model.BvbLastProcessedNews;
+import com.scopert.bvbeventnotifier.storage.repository.BvbLastProcessedNewsRepository;
+import com.scopert.bvbeventnotifier.storage.services.BvbLastProcessedNewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -8,8 +11,9 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Objects;
 
 @Slf4j
@@ -21,11 +25,13 @@ public class CurrentReportsCrawler {
     @Autowired
     DocumentProcessor documentProcessor;
 
-    private String lastProcessedReport;
+    @Autowired
+    BvbLastProcessedNewsService bvbLastProcessedNewsService;
 
     public void getLatestReportsOfToday(String URL) throws IOException {
         DocumentWrapper bvbDocument = new DocumentWrapper(Jsoup.connect(URL).get());
         String latestFoundReportDescription = bvbDocument.getLatestFoundReportDescription();
+        String lastProcessedReport = bvbLastProcessedNewsService.findTopByOrderByIdDesc().getNewsTitle();
 
         log.debug("1. index is at :" + lastProcessedReport);
         if (latestFoundReportDescription.equals(lastProcessedReport)) {
@@ -49,8 +55,8 @@ public class CurrentReportsCrawler {
                        .forEach(url -> documentProcessor.processAttachments(symbol, url));
         }
 
-        lastProcessedReport = latestFoundReportDescription;
-        log.debug("2. index is at :" + lastProcessedReport);
+        BvbLastProcessedNews savedIndex = bvbLastProcessedNewsService.saveLastProcesedNews(latestFoundReportDescription);
+        log.debug("2. index is at :" + savedIndex.getNewsTitle());
         log.debug("Processed {} new reports. Index has been updated with last processed report.", unprocessedReports.size());
     }
 

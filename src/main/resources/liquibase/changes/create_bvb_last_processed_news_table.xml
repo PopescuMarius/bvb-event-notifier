@@ -5,15 +5,17 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <changeSet author="admin" id="1">
-        <createTable tableName="user">
+    <changeSet author="mpopescu" id="1">
+
+        <!-- Used to store the last found news from BVB -->
+        <createTable tableName="bvb_last_processed_news">
             <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="VARCHAR(255)">
+            <column name="news_title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="email" type="VARCHAR(255)"/>
+            <column name="processed_at" type="timestamp"/>
         </createTable>
         <rollback>
             <dropTable tableName="person"/>
